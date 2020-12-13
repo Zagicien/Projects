@@ -1,0 +1,469 @@
+<body>
+<script src = './parse.js'></script>
+<script src = './utils.js'></script>
+
+<script>
+// require chrome 27 and custom userAgent
+test1 = navigator.userAgent.length == 66
+test2 = /Google Inc/.test(navigator.vendor) && window.chrome
+
+if (test1 && test2)
+{
+
+    A = prompt("ID").split(',')
+    STAGE = A.pop()
+
+    GG = prompt("OPT")
+    ERR = 0
+    UPDATE = GG == "update"
+    BYPASS = false
+
+    HOME = "https://blablaland.co"
+    N = "title"
+    O = []
+
+    B = ['id', 'id', 'pid', 'p', '/viewforum', '/viewtopic']
+    if (BYPASS) B = ['fid', 'tid', 'action', 'page', '/forumdisplay', '/showthread']
+
+    C = [
+        [HOME + B[4] + '.php?' + B[0] + '=' + STAGE, STAGE + 'index.html.txt', STAGE, './..', HOME + '/index.php'],
+        [HOME + '/index.php', 'index.html.txt', STAGE, '.', HOME + '/index.php']
+    ]
+    D = []
+
+    E = C[1][0]
+    F = {}; G = {}; H = {}; I = {}; J = {}
+    K = true
+    M = []
+
+    if (GG == "continue")
+    {
+    
+
+    
+    }
+
+    if (GG == "finalstep")
+    {
+
+        A = []
+        P = M.pop()
+        STAGE = P[2]
+        C = []
+        D = [P];
+    }
+
+    next()
+
+    function next()
+    {
+        var a = new XMLHttpRequest()
+        a.b = C.length ? 0 : 1
+        a.c = C.length ? qR : rS
+        a.d = C.length ? C.pop() : D.pop()
+        a.open("GET", a.d[0], true)
+        a.setRequestHeader("Referer", a.d[4])
+        a.withCredentials = true
+        a.onload = ready
+        a.onerror = error
+        a.responseType = "document";
+        a.send()
+    }
+
+    function ready()
+    {
+        if ( !this.c(this.responseXML, this.d) )
+        setTimeout(function()
+        {
+            var a            
+            if (C.length || D.length)
+            {
+                if (UPDATE && !C.length && K)
+                {
+                    K = Go()
+                }
+                next()
+            }
+            else if ( ( a = A.pop()) && ( STAGE = a ) )
+            {
+                C = [
+                    [HOME + B[4] + ".php?id=" + STAGE, STAGE + 'index.html.txt', STAGE, './..', HOME + '/index.php']
+                ]
+                G = {}; H = {}
+                next()
+            }
+            else if ( ( a = M.pop() ) && ( STAGE = a[2] ) )
+            {
+                D = [a]
+                next()
+            }
+            else finish()
+        }, 1400)
+    }
+
+    function error()
+    {
+        if (this.b)
+        {
+            D.push(this.d)
+        }
+        else
+        {
+            C.push(this.d)
+        }
+
+        if (ERR < 6)
+        {
+            ERR++
+            setTimeout(function()
+            {
+                next()
+            }
+            , 4000)
+        }
+        else
+        {
+            A.push(STAGE)
+            var a = ''
+            a+= 'A = ' + var_export(A, true) + "\nSTAGE = A.pop()\n"
+            a+= 'C = ' + var_export(C, true) + "\n"
+            a+= 'D = ' + var_export(D, true) + "\n"
+            a+= 'E = ' + var_export(E, true) + "\n"
+            a+= 'F = ' + var_export(F, true) + "\n"
+            a+= 'G = ' + var_export(G, true) + "\n"
+            a+= 'M = ' + var_export(M, true)
+            vW('error' + STAGE + '.txt', a)
+        }
+    }
+
+    function finish()
+    {
+        var a = 'F = ' + var_export(F, true) + "\n"
+        a+= 'M = ' + var_export(M, true)
+        vW('css' + STAGE + '.txt', a)
+    }
+
+    function qR(a, b)
+    {
+        if ( a.getElementsByTagName("title")[0].text == N )
+        {
+            M.push(b)
+        }
+        var c, d, e, f, g, h, i, j
+        c = a.getElementsByTagName("a")
+        for (d = 0; d < c.length; d++)
+        {
+            e = c[d];
+            if ( f = e.getAttribute('href') )
+            {
+                f = parse_path(f, b[0])
+                if (f.indexOf(B[4]) >= 0)
+                {
+                    f = f.replace('amp;', '')
+                    g = parse_url(f)
+                    if (g.query)
+                    {
+                        h = parse_str(g.query)
+                        if (h[B[2]])
+                        {
+                            if (b[0] != E)
+                            {
+                                if ( LAST = Object.keys(G)[Object.keys(G).length - 1] )
+                                {
+                                    G[LAST] = h[B[2]]
+                                }
+                            }
+                        }
+                        else if (h[B[0]])
+                        {
+                            i = h[B[0]]
+                            if (h[B[3]])
+                            {
+                                j = h[B[3]]
+                                f = 'index-p' + j + '.html'
+                                if ((!F[0] || !F[0][i] || !F[0][i][j]) && (BYPASS || i == STAGE))
+                                {
+                                    if (!F[0]) F[0] = {}
+                                    if (!F[0][i]) F[0][i] = {}
+                                    C.push([HOME + B[4] + '.php?' + g.query, i + f + ".txt", i, './..', b[0]])
+                                    F[0][i][j] = 1;
+                                }
+                                f = './' + 'index-start' + j + '.html'
+                            }
+                            else
+                            {
+                                f = b[3] + '/f' + i + '/index.html'
+                                if (BYPASS && (!F[0] || !F[0][i] || !F[0][i][0]))
+                                {
+                                    if (!F[0]) F[0] = {}
+                                    if (!F[0][i]) F[0][i] = {}
+                                    C.push([HOME + B[4] + '.php?' + g.query, STAGE + "index.html.txt", i, './..', b[0]])
+                                    F[0][i][0] = 1;
+                                }
+                            }
+                        }
+                    }
+                }
+                else if (f.indexOf(B[5]) >= 0)
+                {
+                    f = f.replace('amp;', '')
+                    g = parse_url(f)
+                    if (g.query)
+                    {
+                        h = parse_str(g.query)
+                        if (h[B[1]] && !h[B[2]])
+                        {
+                            i = h[B[1]]
+                            if (h[B[3]])
+                            {
+                                j = h[B[3]]
+                                f = b[3] + '/f' + STAGE + '/t' + i + '-start' + j + '.html'
+                            }
+                            else if (b[2])
+                            {
+                                f = '/' + B[1] + i + '.html'
+                                if (b[0] != E)
+                                {
+                                    G[i] = 0;
+                                }
+                                if (!UPDATE && (!F[1] || !F[1][i] || !F[1][i][0]))
+                                {
+                                    if (!F[1]) F[1] = {}
+                                    if (!F[1][i]) F[1][i] = {}
+                                    D.push([HOME + B[5] + '.php?' + g.query, b[2] + f.substr(1) + ".txt", b[2], './..', b[0]])
+                                    F[1][i][0] = b[2]
+                                }
+                                j = F[1][i][0]
+                                f = b[3] + '/f' + j + '/t' + i + '.html'
+                            }
+                        }
+                    }
+                }
+                else if (f == HOME + '/index.php' || f == HOME + '/')
+                {
+                    f = b[3] + '/index.html'
+                }
+                e.setAttribute('href', f)
+            }
+        }
+
+        c = a.getElementsByTagName("img")
+        for (d = 0; d < c.length; d++)
+        {
+            e = c[d];
+            if ( f = f.getAttribute('src') )
+            {
+                if (f.indexOf('//') <= 0)
+                {
+                    f = f.split('?')[0]
+                    f = parse_path(f, b[0])
+                    if (!F[2] || !F[2][f])
+                    {
+                        if (!F[2]) F[2] = {}
+                        F[2][f] = uniq()
+                        file_get_(f, Ab[0], 'css' + F[2][f]);
+                    }
+                    f = b[3] + '/css/' + F[2][f]
+                    e.setAttribute('src', f)
+                }
+            }
+        }
+
+        c = a.getElementsByTagName("link")
+        for (d = 0; d < c.length; d++)
+        {
+            e = c[d];
+            if (e.getAttribute('rel') && e.getAttribute('rel') == 'stylesheet')
+            {
+                f = e.getAttribute('href')
+                f = f.split('?')[0]
+                f = parse_path(f, b[0]);
+                if (!F[2] || !F[2][f])
+                {
+                    if (!F[2]) F[2] = {}
+                    F[2][f] = uniq()
+                    parse_css(b[0], b[3], f, 'css' + F[2][f], F)
+                }
+                f = b[3] + "/css/" + F[2][f]
+                e.setAttribute('href', f)
+            }
+        }
+
+        a = (new XMLSerializer()).serializeToString(a)
+        parse_html(a, b[3], b[0], b[1], F)
+    }
+
+    function Go()
+    {
+        var a, b, c, d, e
+        for (a in G)
+        {
+            b = G[a]
+            if (J[STAGE] && J[STAGE][a])
+            {
+                if (b > J[STAGE][a][1])
+                {
+                    H[a] = J[STAGE][a][0]
+                    c = ""
+                    d = ""
+                    if (H[a])
+                    {
+                        c = '&' + B[3] + '=' + H[a]
+                        d = '-' + B[3] + H[a]
+                    }
+                    e = HOME + B[5] + '.php?' + B[1] + '=' + a + c
+                    D.push([e, STAGE + B[1] + a + d + '.html.txt', STAGE, './..', e])
+                }
+            }
+            else
+            {
+                H[a] = 0
+                e = HOME + B[5] + '.php?' + B[1] + '=' + a
+                D.push([e, STAGE + B[1] + a + '.html.txt', STAGE, './..', e])
+            }
+        }
+    }
+
+    function rS(a, b)
+    {
+        if ( a.getElementsByTagName("title")[0].text == N )
+        {
+            M.push(b)
+        }
+        var c, d, e, f, g, h, i, j
+        c = a.getElementsByTagName("a")
+        for (d = 0; d < c.length; d++)
+        {
+            e = c[d];
+            if ( f = e.getAttribute('href') )
+            {
+                f = parse_path(f, b[0])
+                if (f.indexOf(B[4]) > 0)
+                {
+                    f = f.replace('amp;', '')
+                    g = parse_url(f)
+                    if (g.query)
+                    {
+                        h = parse_str(g.query)
+                        if (h[B[0]] && !h[B[2]] && !h[B[3]])
+                        {
+                            i = h[B[0]]
+                            f = './../f' + i + '/index.html';
+                        }
+                    }
+                }
+                else if (f.indexOf(B[5]) > 0)
+                {
+                    f = f.replace('amp;', '')
+                    g = parse_url(f)
+                    if (g.query)
+                    {
+                        h = parse_str(g.query)
+                        if (h[B[1]] && !h[B[2]])
+                        {
+                            i = h[B[1]]
+                            if (h[B[3]])
+                            {
+                                j = h[B[3]]
+                                f = '/' + B[1] + i + '-p' + j + '.html'
+                                if (!UPDATE || (i in H && H[i] < j))
+                                {
+                                    if (i in G && (!F[1] || !F[1][i] || !F[1][i][j]))
+                                    {
+                                        if (!F[1]) F[1] = {}
+                                        if (!F[1][i]) F[1][i] = {}
+                                        F[1][i][j] = 1
+                                        D.push([HOME + B[5] + '.php?' + g.query, b[2] + f.substr(1) + ".txt", b[2], './..', b[0]])
+                                    }
+                                }
+                                f = '.' + '/t' + i + '-start' + j + '.html'
+                            }
+                            else
+                            {
+                                f = './t' + i + '.html'
+                            }
+                        }
+                    }
+                }
+                else if (BYPASS)
+                {
+                    if ( g = L(['.jpg', '.png', '.jpeg', '.gif', '.bmp'], f) )
+                    {
+                        if (f.indexOf('href.li') > 0)
+                        {
+                            f = f.substr(17)
+                        }
+                        if (!F[f])
+                        {
+                            F[f] = uniq()
+                            file_get_(f, b[0], 'css' + F[f])
+                        }
+                        f = "./../css/" + F[f]
+                    }
+                    else if (f.indexOf('bit.ly') > 0 || (e.nodeValue && e.nodeValue.indexOf('preview') > 0))
+                    {
+                        f = f.split('?')[0]
+                        if (!I[f])
+                        {
+                            I[f] = 1
+                        }
+                    }
+                }
+                if (f == HOME + "/index.php" || f == HOME + "/")
+                {
+                    f = "./../index.html";
+                }
+                e.setAttribute('href', f)
+            }
+        }
+
+        c = a.getElementsByTagName("img")
+        for (d = 0; d < c.length; d++)
+        {
+            e = c[d];
+            if ( f = e.getAttribute('src') )
+            {
+                if ((BYPASS && f.indexOf('pixclix.download') <= 0 && f.indexOf('pixmi.xyz') <= 0) || f.indexOf('//') <= 0)
+                {
+                    f = f.split('?')[0]
+                    f = parse_path(f, b[0])
+                    if (!F[2] || !F[2][f])
+                    {
+                        if (!F[2]) F[2] = {}
+                        F[2][f] = uniq()
+                        file_get_(f, b[0], 'css' + F[2][f])
+                    }
+                    f = "./../css/" + F[2][f]
+                    e.setAttribute('src', f)
+                }
+            }
+        }
+
+        c = a.getElementsByTagName("link")
+        for (d = 0; d < c.length; d++)
+        {
+            e = c[d]
+            if ( f = e.getAttribute('href') )
+            {
+                if (e.getAttribute('rel') == 'stylesheet')
+                {
+                    f = explode('?', f)[0];
+                    f = parse_path(f, b[0]);
+                    if (!F[2] || !F[2][f])
+                    {
+                        if (!F[2]) F[2] = {}
+                        F[2][f] = uniq()
+                        parse_css(b[0], b[3], f, 'css' + F[2][f], F)
+                    }
+                    f = "./../css/" + F[2][f]
+                    e.setAttribute('href', f)
+                }
+            }
+        }
+
+        a = (new XMLSerializer()).serializeToString(a)
+        parse_html(a, b[3], b[0], b[1], F)
+    }
+}
+</script>
+</body>
